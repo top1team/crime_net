@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import ShieldIcon from './icons/ShieldIcon';
 import MenuIcon from './icons/MenuIcon';
+import ThemeToggle from './ThemeToggle';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,13 +16,13 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <header className="bg-stone-50/90 backdrop-blur-sm sticky top-0 z-50 border-b border-stone-200" style={{position: 'sticky'}}>
+    <header className="bg-stone-50/90 dark:bg-stone-900/90 backdrop-blur-sm sticky top-0 z-50 border-b border-stone-200 dark:border-stone-700" style={{position: 'sticky'}}>
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center gap-2">
               <ShieldIcon className="h-8 w-8 text-red-600" />
-              <span className="text-stone-800 font-bold text-xl">CrimeNet</span>
+              <span className="text-stone-800 dark:text-stone-200 font-bold text-xl">CrimeNet</span>
             </Link>
           </div>
           <div className="hidden md:block">
@@ -30,7 +31,7 @@ const Header: React.FC = () => {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="text-stone-600 hover:bg-stone-100 hover:text-stone-800 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 hover:text-stone-800 dark:hover:text-stone-200 px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -39,7 +40,8 @@ const Header: React.FC = () => {
           </div>
           <div className="hidden md:block">
              <div className="flex items-center gap-4">
-                <Link href="/login" className="text-stone-600 hover:text-stone-800 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <ThemeToggle />
+                <Link href="/login" className="text-stone-600 dark:text-stone-300 hover:text-stone-800 dark:hover:text-stone-200 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                   Login
                 </Link>
                 <Link href="/signup" className="bg-red-600 text-white hover:bg-red-700 px-4 py-2 rounded-md text-sm font-bold transition-colors">
@@ -51,7 +53,7 @@ const Header: React.FC = () => {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               type="button"
-              className="bg-stone-100 inline-flex items-center justify-center p-2 rounded-md text-stone-600 hover:text-stone-800 hover:bg-stone-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-stone-100 focus:ring-stone-300"
+              className="bg-stone-100 dark:bg-stone-700 inline-flex items-center justify-center p-2 rounded-md text-stone-600 dark:text-stone-300 hover:text-stone-800 dark:hover:text-stone-200 hover:bg-stone-200 dark:hover:bg-stone-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-stone-100 dark:focus:ring-offset-stone-900 focus:ring-stone-300 dark:focus:ring-stone-500"
               aria-controls="mobile-menu"
               aria-expanded="false"
             >
@@ -69,12 +71,12 @@ const Header: React.FC = () => {
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-stone-600 hover:bg-stone-100 hover:text-stone-800 block px-3 py-2 rounded-md text-base font-medium transition-colors"
+                className="text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 hover:text-stone-800 dark:hover:text-stone-200 block px-3 py-2 rounded-md text-base font-medium transition-colors"
               >
                 {link.label}
               </Link>
             ))}
-             <Link href="/login" className="text-stone-600 hover:bg-stone-100 hover:text-stone-800 block px-3 py-2 rounded-md text-base font-medium transition-colors">
+             <Link href="/login" className="text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 hover:text-stone-800 dark:hover:text-stone-200 block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Login
               </Link>
               <Link href="/signup" className="bg-red-600 text-white hover:bg-red-700 block px-3 py-2 rounded-md text-base font-bold transition-colors">
