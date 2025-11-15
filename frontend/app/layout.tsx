@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
+import ConditionalFooter from "../components/ConditionalFooter";
 import { ThemeProvider } from "../contexts/ThemeContext";
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ export default function RootLayout({
           <main className="flex-grow">
             {children}
           </main>
-          <Footer />
+          <ConditionalFooter />
         </ThemeProvider>
       </body>
     </html>
