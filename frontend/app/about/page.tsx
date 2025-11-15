@@ -63,7 +63,6 @@ export default function AboutPage() {
             </div>
             <div className="bg-stone-100 dark:bg-stone-700 rounded-lg p-8">
               <div className="text-center">
-                <div className="text-4xl mb-4">🎯</div>
                 <h3 className="text-xl font-bold text-stone-800 dark:text-stone-200 mb-2">Our Goal</h3>
                 <p className="text-stone-600 dark:text-stone-300">
                   Reduce crime rates by 30% in participating communities through improved reporting and response coordination.
