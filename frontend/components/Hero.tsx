@@ -8,9 +8,9 @@ const Hero: React.FC = () => {
             <img 
                 src="https://picsum.photos/seed/safety/1920/1080" 
                 alt="Person calling for help in a city at night" 
-                className="w-full h-full object-cover opacity-10"
+                className="w-full h-full object-cover opacity-70"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-stone-50 via-stone-50/90 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-stone-50/80 via-stone-50/40 to-transparent"></div>
         </div>
       
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 lg:py-48">
