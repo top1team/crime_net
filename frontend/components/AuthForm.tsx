@@ -82,9 +82,19 @@ const AuthForm: React.FC<AuthFormProps> = ({ initialState }) => {
             <GhostButton onClick={() => setIsSignUp(false)}>Sign In</GhostButton>
           </div>
           <div className={`overlay-panel overlay-right ${isSignUp ? 'translate-x-1/5' : 'translate-x-0'}`}>
-            <h1 className="text-3xl font-bold mb-4">Hello, Friend!</h1>
-            <p className="text-sm font-light leading-snug mb-6">Enter your personal details and start your journey with us</p>
-            <GhostButton onClick={() => setIsSignUp(true)}>Sign Up</GhostButton>
+            {isSignUp ? (
+              <>
+                <h1 className="text-3xl font-bold mb-4">Welcome Back!</h1>
+                <p className="text-sm font-light leading-snug mb-6">To keep connected with us please login with your personal info</p>
+                <GhostButton onClick={() => setIsSignUp(false)}>Sign In</GhostButton>
+              </>
+            ) : (
+              <>
+                <h1 className="text-3xl font-bold mb-4">Hello, Friend!</h1>
+                <p className="text-sm font-light leading-snug mb-6">Enter your personal details and start your journey with us</p>
+                <GhostButton onClick={() => setIsSignUp(true)}>Sign Up</GhostButton>
+              </>
+            )}
           </div>
         </div>
       </div>
