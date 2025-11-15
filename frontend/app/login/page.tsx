@@ -1,5 +1,9 @@
 import AuthForm from "../../components/AuthForm";
 
 export default function LoginPage() {
-  return <AuthForm initialState="login" />;
+  return (
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <AuthForm initialState="login" />
+    </div>
+  );
 }
