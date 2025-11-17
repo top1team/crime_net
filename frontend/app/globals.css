@@ -12,19 +12,70 @@
 }
 
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  background-color: var(--bg-primary);
+    max-width: 100vw;
+    overflow-x: hidden;
+    height: 100%;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Leaflet Map Styles */
+.leaflet-container {
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+.leaflet-control-zoom a {
+    background-color: white;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+.leaflet-popup-tip {
+    box-shadow: none;
+}
+
+/* Crime pin custom styles */
+.crime-pin {
+    background: transparent !important;
+    border: none !important;
+}
+
+/* Ensure map tiles load properly */
+.leaflet-tile {
+    filter: none !important;
+}
+
+/* Fix for map container in Next.js */
+.map-container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+/* Loading states */
+.loading-spinner {
+    border-top-color: #dc2626;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
