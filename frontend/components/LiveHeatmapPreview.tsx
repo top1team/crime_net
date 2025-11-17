@@ -103,7 +103,7 @@ const LiveHeatmapPreview: React.FC = () => {
   }
 
   return (
-    <section className="bg-white py-20 sm:py-24 border-t border-gray-200">
+    <section className="bg-white dark:bg-stone-900 py-20 sm:py-24 border-t border-gray-200 dark:border-stone-700">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Column: Map */}
@@ -124,14 +124,14 @@ const LiveHeatmapPreview: React.FC = () => {
                 <div className="flex flex-col sm:flex-row gap-4">
                      <div className="flex-1 flex flex-wrap gap-2 items-center">
                         {CRIME_CATEGORIES.map(category => (
-                            <button key={category} onClick={() => setActiveCategory(category)} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${activeCategory === category ? 'bg-red-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'}`}>
+                            <button key={category} onClick={() => setActiveCategory(category)} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${activeCategory === category ? 'bg-red-600 text-white' : 'bg-white dark:bg-stone-800 text-gray-600 dark:text-stone-300 hover:bg-gray-100 dark:hover:bg-stone-700 border border-gray-200 dark:border-stone-600'}`}>
                                 {category}
                             </button>
                         ))}
                     </div>
                      <div className="flex-shrink-0 flex flex-wrap gap-2 items-center">
                         {DATE_RANGES.map(range => (
-                            <button key={range} onClick={() => setActiveDateRange(range)} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${activeDateRange === range ? 'bg-red-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-100 border border-gray-200'}`}>
+                            <button key={range} onClick={() => setActiveDateRange(range)} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${activeDateRange === range ? 'bg-red-600 text-white' : 'bg-white dark:bg-stone-800 text-gray-600 dark:text-stone-300 hover:bg-gray-100 dark:hover:bg-stone-700 border border-gray-200 dark:border-stone-600'}`}>
                                 {range}
                             </button>
                         ))}
@@ -140,29 +140,29 @@ const LiveHeatmapPreview: React.FC = () => {
             </div>
 
             {/* Right Column: Stats */}
-            <div className="text-black">
-                <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
+            <div className="text-black dark:text-stone-200">
+                <h2 className="text-3xl font-extrabold tracking-tight text-black dark:text-stone-200 sm:text-4xl">
                     Live Crime Activity
                 </h2>
-                <p className="mt-4 text-lg text-gray-600">
+                <p className="mt-4 text-lg text-gray-600 dark:text-stone-300">
                     Get a real-time overview of reported incidents. This data is updated continuously based on community reports.
                 </p>
                 <div className="mt-8 grid grid-cols-2 gap-6">
-                    <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                        <p className="text-sm text-gray-500">Live incidents in this area</p>
+                    <div className="bg-gray-50 dark:bg-stone-800 p-6 rounded-lg border border-gray-200 dark:border-stone-700">
+                        <p className="text-sm text-gray-500 dark:text-stone-400">Live incidents in this area</p>
                         <p className="text-4xl font-bold text-red-500">{stats.incidents}</p>
                     </div>
-                     <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                        <p className="text-sm text-gray-500">Most common crime</p>
-                        <p className="text-2xl font-bold text-black truncate">{stats.mostCommon.name}</p>
-                        <p className="text-sm font-semibold text-gray-500">{stats.mostCommon.percentage}% of reports</p>
+                     <div className="bg-gray-50 dark:bg-stone-800 p-6 rounded-lg border border-gray-200 dark:border-stone-700">
+                        <p className="text-sm text-gray-500 dark:text-stone-400">Most common crime</p>
+                        <p className="text-2xl font-bold text-black dark:text-stone-200 truncate">{stats.mostCommon.name}</p>
+                        <p className="text-sm font-semibold text-gray-500 dark:text-stone-400">{stats.mostCommon.percentage}% of reports</p>
                     </div>
-                     <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                        <p className="text-sm text-gray-500">Current Safety Score</p>
-                        <p className="text-4xl font-bold text-black">{stats.safetyScore}<span className="text-2xl text-gray-400">/10</span></p>
+                     <div className="bg-gray-50 dark:bg-stone-800 p-6 rounded-lg border border-gray-200 dark:border-stone-700">
+                        <p className="text-sm text-gray-500 dark:text-stone-400">Current Safety Score</p>
+                        <p className="text-4xl font-bold text-black dark:text-stone-200">{stats.safetyScore}<span className="text-2xl text-gray-400 dark:text-stone-500">/10</span></p>
                     </div>
-                     <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                        <p className="text-sm text-gray-500">Trend vs. last period</p>
+                     <div className="bg-gray-50 dark:bg-stone-800 p-6 rounded-lg border border-gray-200 dark:border-stone-700">
+                        <p className="text-sm text-gray-500 dark:text-stone-400">Trend vs. last period</p>
                         <div className={`flex items-center gap-2 text-2xl font-bold ${stats.trend.direction === 'up' ? 'text-red-500' : 'text-green-500'}`}>
                             {stats.trend.direction === 'up' ? <ArrowUpIcon className="h-6 w-6"/> : <ArrowDownIcon className="h-6 w-6"/>}
                             <span>{stats.trend.value}%</span>
@@ -173,7 +173,7 @@ const LiveHeatmapPreview: React.FC = () => {
                     <a href="/heatmap" className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition-transform transform hover:scale-105 shadow-lg">
                         View Full Interactive Map
                     </a>
-                    <a href="#" className="w-full sm:w-auto text-sm text-gray-600 hover:text-black px-6 py-3 rounded-md hover:bg-gray-100 transition-colors">
+                    <a href="#" className="w-full sm:w-auto text-sm text-gray-600 dark:text-stone-300 hover:text-black dark:hover:text-stone-200 px-6 py-3 rounded-md hover:bg-gray-100 dark:hover:bg-stone-700 transition-colors">
                         Set up neighborhood alerts
                     </a>
                 </div>

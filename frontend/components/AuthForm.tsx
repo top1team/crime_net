@@ -27,8 +27,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ initialState }) => {
   );
 
   const Form: React.FC<{ title: string; buttonText: string; children: React.ReactNode }> = ({ title, buttonText, children }) => (
-    <div className="bg-white flex flex-col items-center justify-center h-full px-12 text-center">
-      <h1 className="text-3xl font-bold text-black mb-4">{title}</h1>
+    <div className="bg-white dark:bg-stone-800 flex flex-col items-center justify-center h-full px-12 text-center">
+      <h1 className="text-3xl font-bold text-black dark:text-stone-200 mb-4">{title}</h1>
       <div className="flex my-4">
         <a href="#" className="social-link"><FacebookIcon className="h-6 w-6" /></a>
         <a href="#" className="social-link"><TwitterIcon className="h-6 w-6" /></a>
@@ -42,23 +42,23 @@ const AuthForm: React.FC<AuthFormProps> = ({ initialState }) => {
 
   const InputField: React.FC<{ type: string; placeholder: string; icon: React.ReactNode }> = ({ type, placeholder, icon }) => (
     <div className="relative w-full my-2">
-      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-stone-500">
         {icon}
       </span>
       <input
         type={type}
         placeholder={placeholder}
-        className="bg-gray-100 border border-gray-200 w-full p-3 pl-12 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
+        className="bg-gray-100 dark:bg-stone-700 border border-gray-200 dark:border-stone-600 w-full p-3 pl-12 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 text-black dark:text-stone-200 placeholder-gray-500 dark:placeholder-stone-400"
       />
     </div>
   );
   
   return (
-    <div className={`relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl min-h-[600px] overflow-hidden`}>
+    <div className={`relative bg-white dark:bg-stone-800 rounded-2xl shadow-2xl w-full max-w-4xl min-h-[600px] overflow-hidden`}>
       {/* Form Containers */}
       <div className={`form-container sign-up-container ${isSignUp ? 'translate-x-full opacity-100 z-5' : 'opacity-0 z-1'}`}>
         <Form title="Create Account" buttonText="Sign Up">
-          <span className="text-sm text-gray-500 mb-4">or use your email for registration</span>
+          <span className="text-sm text-gray-500 dark:text-stone-400 mb-4">or use your email for registration</span>
           <InputField type="text" placeholder="Name" icon={<UserIcon className="h-5 w-5" />} />
           <InputField type="email" placeholder="Email" icon={<EmailIcon className="h-5 w-5" />} />
           <InputField type="password" placeholder="Password" icon={<LockIcon className="h-5 w-5" />} />
@@ -66,10 +66,10 @@ const AuthForm: React.FC<AuthFormProps> = ({ initialState }) => {
       </div>
       <div className={`form-container sign-in-container ${isSignUp ? '-translate-x-full opacity-0' : 'opacity-100 z-2'}`}>
         <Form title="Sign In" buttonText="Sign In">
-          <span className="text-sm text-gray-500 mb-4">or use your account</span>
+          <span className="text-sm text-gray-500 dark:text-stone-400 mb-4">or use your account</span>
           <InputField type="email" placeholder="Email" icon={<EmailIcon className="h-5 w-5" />} />
           <InputField type="password" placeholder="Password" icon={<LockIcon className="h-5 w-5" />} />
-          <a href="#" className="text-sm text-gray-500 my-4 hover:underline">Forgot your password?</a>
+          <a href="#" className="text-sm text-gray-500 dark:text-stone-400 my-4 hover:underline">Forgot your password?</a>
         </Form>
       </div>
       
@@ -82,9 +82,19 @@ const AuthForm: React.FC<AuthFormProps> = ({ initialState }) => {
             <GhostButton onClick={() => setIsSignUp(false)}>Sign In</GhostButton>
           </div>
           <div className={`overlay-panel overlay-right ${isSignUp ? 'translate-x-1/5' : 'translate-x-0'}`}>
-            <h1 className="text-3xl font-bold mb-4">Hello, Friend!</h1>
-            <p className="text-sm font-light leading-snug mb-6">Enter your personal details and start your journey with us</p>
-            <GhostButton onClick={() => setIsSignUp(true)}>Sign Up</GhostButton>
+            {isSignUp ? (
+              <>
+                <h1 className="text-3xl font-bold mb-4">Welcome Back!</h1>
+                <p className="text-sm font-light leading-snug mb-6">To keep connected with us please login with your personal info</p>
+                <GhostButton onClick={() => setIsSignUp(false)}>Sign In</GhostButton>
+              </>
+            ) : (
+              <>
+                <h1 className="text-3xl font-bold mb-4">Hello, Friend!</h1>
+                <p className="text-sm font-light leading-snug mb-6">Enter your personal details and start your journey with us</p>
+                <GhostButton onClick={() => setIsSignUp(true)}>Sign Up</GhostButton>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -147,8 +157,15 @@ const AuthForm: React.FC<AuthFormProps> = ({ initialState }) => {
             color: #333;
             transition: background-color 0.2s;
         }
+        .dark .social-link {
+            border-color: #6b7280;
+            color: #d1d5db;
+        }
         .social-link:hover {
             background-color: #eee;
+        }
+        .dark .social-link:hover {
+            background-color: #374151;
         }
       `}</style>
     </div>
