@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --bg-primary: #fafaf9;
+  --bg-secondary: #f7f6f4;
+  --bg-soft: #f5f4f2;
+  --text-primary: #2c2c2c;
+  --text-secondary: #525252;
+  --border-soft: #e7e5e4;
+}
+
 * {
     box-sizing: border-box;
     padding: 0;

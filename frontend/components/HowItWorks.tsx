@@ -78,13 +78,13 @@ const HowItWorks: React.FC = () => {
     const ReportCard = ({ data, onClick, isFaded }: { data: any, onClick: () => void, isFaded: boolean }) => (
         <div 
             onClick={onClick}
-            className={`bg-white border border-gray-200 rounded-2xl p-8 flex flex-col h-full cursor-pointer transition-all duration-500 ease-in-out shadow-md ${isFaded ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'} ${data.feature.hover} hover:shadow-xl`}
+            className={`bg-stone-50 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 rounded-2xl p-8 flex flex-col h-full cursor-pointer transition-all duration-500 ease-in-out shadow-md ${isFaded ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'} ${data.feature.hover} hover:shadow-xl`}
         >
              <div className="flex items-center gap-4">
                 {data.icon}
-                <h3 className="text-2xl font-bold text-black">{data.title}</h3>
+                <h3 className="text-2xl font-bold text-stone-800 dark:text-stone-200">{data.title}</h3>
             </div>
-            <ul className="mt-6 space-y-4 text-gray-600 list-disc list-inside">
+            <ul className="mt-6 space-y-4 text-stone-600 dark:text-stone-300 list-disc list-inside">
                 {data.steps.map((step: string, index: number) => <li key={index}>{step}</li>)}
             </ul>
             <div className="mt-auto pt-6">
@@ -96,27 +96,27 @@ const HowItWorks: React.FC = () => {
     );
 
     const DetailPanel = ({ data, onClose, isVisible, arrowDirection }: { data: any, onClose: () => void, isVisible: boolean, arrowDirection: 'left' | 'right' }) => (
-        <div className={`bg-white border rounded-2xl p-8 flex flex-col h-full absolute top-0 left-0 w-full transition-all duration-500 ease-in-out ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'} ${data.detail.style}`}>
+        <div className={`bg-stone-50 dark:bg-stone-800 border dark:border-stone-700 rounded-2xl p-8 flex flex-col h-full absolute top-0 left-0 w-full transition-all duration-500 ease-in-out ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'} ${data.detail.style}`}>
             <div className="flex items-center gap-4 mb-8">
                 {data.icon}
-                <h3 className="text-2xl font-bold text-black">{data.detail.title}</h3>
+                <h3 className="text-2xl font-bold text-stone-800 dark:text-stone-200">{data.detail.title}</h3>
             </div>
             <div className="space-y-6 flex-grow">
                 {data.detail.steps.map((step: {title: string, description: string}, index: number) => (
                     <div key={index} className="flex items-start gap-4">
-                        <div className="flex-shrink-0 w-8 h-8 bg-gray-100 border border-gray-200 rounded-full flex items-center justify-center font-bold text-gray-800 mt-1">
+                        <div className="flex-shrink-0 w-8 h-8 bg-stone-100 dark:bg-stone-700 border border-stone-200 dark:border-stone-600 rounded-full flex items-center justify-center font-bold text-stone-700 dark:text-stone-300 mt-1">
                             <span>{index + 1}</span>
                         </div>
                         <div>
-                            <h4 className="text-lg font-semibold text-black">{step.title}</h4>
-                            <p className="text-gray-600">{step.description}</p>
+                            <h4 className="text-lg font-semibold text-stone-800 dark:text-stone-200">{step.title}</h4>
+                            <p className="text-stone-600 dark:text-stone-300">{step.description}</p>
                         </div>
                     </div>
                 ))}
             </div>
             <button
                 onClick={onClose}
-                className={`mt-8 inline-flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-black transition-colors group ${arrowDirection === 'left' ? 'self-start' : 'self-end'}`}
+                className={`mt-8 inline-flex items-center gap-2 text-sm font-bold text-stone-600 dark:text-stone-300 hover:text-stone-800 dark:hover:text-stone-200 transition-colors group ${arrowDirection === 'left' ? 'self-start' : 'self-end'}`}
                 aria-label="Go back to reporting options"
             >
                 {arrowDirection === 'left' ? (
@@ -135,13 +135,13 @@ const HowItWorks: React.FC = () => {
     );
 
     return (
-        <section className="bg-white py-20 sm:py-24 border-t border-gray-200">
+        <section className="bg-stone-50 dark:bg-stone-900 py-20 sm:py-24 border-t border-stone-200 dark:border-stone-700">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center max-w-3xl mx-auto">
-                    <h2 className="text-3xl font-extrabold tracking-tight text-black sm:text-4xl">
+                    <h2 className="text-3xl font-extrabold tracking-tight text-stone-800 dark:text-stone-200 sm:text-4xl">
                         Two Ways to Report. One Safe Process.
                     </h2>
-                    <p className="mt-4 text-lg text-gray-600">
+                    <p className="mt-4 text-lg text-stone-600 dark:text-stone-300">
                        Choose the reporting method that's right for you. Click a card below to learn more about each process.
                     </p>
                 </div>

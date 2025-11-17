@@ -47,13 +47,13 @@ const Testimonials: React.FC = () => {
   }, [currentIndex, nextSlide]);
 
   return (
-    <section className="bg-gray-50 py-20 sm:py-24 border-t border-gray-200">
+    <section className="bg-gray-50 dark:bg-stone-800 py-20 sm:py-24 border-t border-gray-200 dark:border-stone-700">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl font-extrabold tracking-tight text-black sm:text-4xl">
+          <h2 className="text-3xl font-extrabold tracking-tight text-black dark:text-stone-200 sm:text-4xl">
             What Our Community Says
           </h2>
-          <p className="mt-4 text-lg text-gray-600">
+          <p className="mt-4 text-lg text-gray-600 dark:text-stone-300">
             Real stories from users who are helping make their neighborhoods safer with CrimeNet.
           </p>
         </div>
@@ -76,10 +76,10 @@ const Testimonials: React.FC = () => {
                     }`}
                   />
                   <blockquote className="max-w-2xl">
-                    <p className="text-xl italic text-gray-800">"{testimonial.quote}"</p>
+                    <p className="text-xl italic text-gray-800 dark:text-stone-200">"{testimonial.quote}"</p>
                   </blockquote>
                   <footer className="mt-4">
-                    <p className="font-bold text-black">{testimonial.author}, {testimonial.location}</p>
+                    <p className="font-bold text-black dark:text-stone-200">{testimonial.author}, {testimonial.location}</p>
                     <div className="mt-2 inline-flex items-center gap-1.5 bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">
                         <VerifiedIcon className="h-4 w-4" />
                         Verified User
@@ -92,17 +92,17 @@ const Testimonials: React.FC = () => {
           
           <button
             onClick={prevSlide}
-            className="absolute top-1/2 -left-4 md:-left-16 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors z-10"
+            className="absolute top-1/2 -left-4 md:-left-16 transform -translate-y-1/2 bg-white dark:bg-stone-700 rounded-full p-2 shadow-md hover:bg-gray-100 dark:hover:bg-stone-600 transition-colors z-10"
             aria-label="Previous testimonial"
           >
-            <ArrowLeftIcon className="h-6 w-6 text-gray-700" />
+            <ArrowLeftIcon className="h-6 w-6 text-gray-700 dark:text-stone-300" />
           </button>
           <button
             onClick={nextSlide}
-            className="absolute top-1/2 -right-4 md:-right-16 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors z-10"
+            className="absolute top-1/2 -right-4 md:-right-16 transform -translate-y-1/2 bg-white dark:bg-stone-700 rounded-full p-2 shadow-md hover:bg-gray-100 dark:hover:bg-stone-600 transition-colors z-10"
             aria-label="Next testimonial"
           >
-            <ArrowRightIcon className="h-6 w-6 text-gray-700" />
+            <ArrowRightIcon className="h-6 w-6 text-gray-700 dark:text-stone-300" />
           </button>
 
           <div className="flex justify-center space-x-3 pt-8">
