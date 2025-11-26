@@ -4,7 +4,7 @@ from sqlmodel import create_engine, SQLModel, Session
 from typing import Generator
 from dotenv import load_dotenv
 load_dotenv()
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://crime_user:crime@db:5432/crime_net")
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./crimenet.db")
 
 # echo=True will print SQL executed; set to False in production if noisy
 engine = create_engine(DATABASE_URL, echo=False)
