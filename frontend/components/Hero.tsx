@@ -23,7 +23,7 @@ const Hero: React.FC = () => {
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/"
+              href="/report"
               className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700 transition-transform transform hover:scale-105 shadow-lg shadow-red-600/30"
             >
               Report an Incident
