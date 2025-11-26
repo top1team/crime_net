@@ -76,6 +76,10 @@ const Header: React.FC = () => {
                 {link.label}
               </Link>
             ))}
+            <div className="flex items-center justify-between px-3 py-2">
+              <span className="text-stone-600 dark:text-stone-300 text-base font-medium">Theme</span>
+              <ThemeToggle />
+            </div>
              <Link href="/login" className="text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-700 hover:text-stone-800 dark:hover:text-stone-200 block px-3 py-2 rounded-md text-base font-medium transition-colors">
                 Login
               </Link>

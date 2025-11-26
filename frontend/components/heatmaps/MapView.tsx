@@ -90,6 +90,7 @@ export default function MapView({ crimes, categoryToHex }: MapViewProps) {
             style={{ height: '100%', width: '100%' }}
         >
             <TileLayer
+                className="dark:filter dark:invert dark:hue-rotate-180 dark:brightness-95 dark:contrast-90"
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
@@ -106,15 +107,15 @@ export default function MapView({ crimes, categoryToHex }: MapViewProps) {
                     >
                         <Popup>
                             <div className="text-sm">
-                                <div className="font-semibold text-red-600">{crime.category}</div>
-                                <div className="text-xs text-gray-600 mb-1">
+                                <div className="font-semibold text-red-600 dark:text-red-400">{crime.category}</div>
+                                <div className="text-xs text-gray-600 dark:text-gray-400 mb-1">
                                     {new Date(crime.created_at).toLocaleString()}
                                 </div>
-                                <div className="text-sm font-medium">{crime.title}</div>
+                                <div className="text-sm font-medium dark:text-gray-200">{crime.title}</div>
                                 {crime.description && (
-                                    <div className="text-xs text-gray-700 mt-1">{crime.description}</div>
+                                    <div className="text-xs text-gray-700 dark:text-gray-300 mt-1">{crime.description}</div>
                                 )}
-                                <div className="mt-2 text-xs text-gray-500 flex justify-between">
+                                <div className="mt-2 text-xs text-gray-500 dark:text-gray-400 flex justify-between">
                                     <span>📍 {crime.location_text ?? "Unknown"}</span>
                                     <span>⚠️ Risk: {crime.risk_score ?? 0}/10</span>
                                 </div>
