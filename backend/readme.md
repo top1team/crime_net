@@ -11,7 +11,7 @@
 3. create a database
 
 ```shell
-    sudo -u postgres psql
+    CREATE DATABASE crime_net;
 ```
 
 create a password for your user in our case 'crime_user'
@@ -21,6 +21,7 @@ create a password for your user in our case 'crime_user'
 
 switch to that user and grant user with privileges to create, insert, delete, etc.
 ```psql shell
-    \c crime_user
+    \c crime_net;
+    
     GRANT ALL PRIVILEGES ON DATABASE crime_net TO crime_user;
 ```

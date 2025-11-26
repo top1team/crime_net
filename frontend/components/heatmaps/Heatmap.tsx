@@ -53,8 +53,8 @@ export default function Heatmap() {
                 if (activeCategory && activeCategory !== 'All') {
                     params.append('category', activeCategory);
                 }
-                // backend endpoint (adjust host/port if different)
-                const url = `http://localhost:8080/api/v1/heatmap${params.toString() ? `?${params.toString()}` : ''}`;
+                // backend endpoint
+                const url = `${process.env.NEXT_PUBLIC_API_URL}/api/crimes${params.toString() ? `?${params.toString()}` : ''}`;
                 const res = await fetch(url);
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data: Crime[] = await res.json();
@@ -93,7 +93,7 @@ export default function Heatmap() {
 
     // utility to pick marker color if backend didn't provide color
     const categoryToHex = (cat: string) => {
-        const m: Record<string,string> = {
+        const m: Record<string, string> = {
             "Murder": "#FF0000",
             "GBV": "#800080",
             "Theft": "#FFA500",
@@ -123,18 +123,18 @@ export default function Heatmap() {
     }, [filtered]);
 
     return (
-        <section id="heatmap" className="bg-gray-50 py-12 sm:py-16">
+        <section id="heatmap" className="bg-gray-50 dark:bg-gray-900 py-12 sm:py-16">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center">
-                    <h2 className="text-3xl font-extrabold tracking-tight text-black sm:text-4xl">Kenya Crime Hotspots</h2>
-                    <p className="mt-3 text-lg text-gray-600 max-w-2xl mx-auto">
+                    <h2 className="text-3xl font-extrabold tracking-tight text-black dark:text-white sm:text-4xl">Kenya Crime Hotspots</h2>
+                    <p className="mt-3 text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                         Real-time crime reports across Kenya. Use filters to focus the map.
                     </p>
                 </div>
 
                 <div className="mt-8 grid grid-cols-1 lg:grid-cols-[1fr,420px] gap-6">
                     {/* Left: Map */}
-                    <div className="rounded-lg overflow-hidden border shadow-lg h-[640px]">
+                    <div className="rounded-lg overflow-hidden border dark:border-gray-700 shadow-lg h-[640px]">
                         {loading ? (
                             <div className="w-full h-full flex items-center justify-center">
                                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
@@ -147,27 +147,27 @@ export default function Heatmap() {
                     {/* Right: Controls + Stats */}
                     <aside className="space-y-4">
                         {/* Filters */}
-                        <div className="bg-white p-4 rounded-lg shadow border">
-                            <h3 className="text-sm font-semibold text-gray-700 mb-3">Filter by Category</h3>
+                        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border dark:border-gray-700">
+                            <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Filter by Category</h3>
                             <div className="flex flex-wrap gap-2">
                                 {CRIME_CATEGORIES.map(cat => (
                                     <button
                                         key={cat}
                                         onClick={() => setActiveCategory(cat)}
-                                        className={`px-3 py-1 text-sm rounded-md capitalize ${activeCategory === cat ? 'bg-red-600 text-white' : 'bg-white text-gray-700 border border-gray-200'}`}
+                                        className={`px-3 py-1 text-sm rounded-md capitalize ${activeCategory === cat ? 'bg-red-600 text-white' : 'bg-white text-gray-700 border border-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600'}`}
                                     >
                                         {cat}
                                     </button>
                                 ))}
                             </div>
 
-                            <h3 className="text-sm font-semibold text-gray-700 my-3">Filter by Date</h3>
+                            <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-200 my-3">Filter by Date</h3>
                             <div className="flex flex-wrap gap-2">
                                 {DATE_RANGES.map(range => (
                                     <button
                                         key={range.value}
                                         onClick={() => setActiveDateRange(range.value)}
-                                        className={`px-3 py-1 text-sm rounded-md ${activeDateRange === range.value ? 'bg-red-600 text-white' : 'bg-white text-gray-700 border border-gray-200'}`}
+                                        className={`px-3 py-1 text-sm rounded-md ${activeDateRange === range.value ? 'bg-red-600 text-white' : 'bg-white text-gray-700 border border-gray-200 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600'}`}
                                     >
                                         {range.label}
                                     </button>
@@ -176,11 +176,11 @@ export default function Heatmap() {
                         </div>
 
                         {/* Stats */}
-                        <div className="bg-white p-4 rounded-lg shadow border space-y-3">
+                        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border dark:border-gray-700 space-y-3">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-gray-500">Total Incidents</p>
-                                    <p className="text-2xl font-bold">{stats.total}</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Total Incidents</p>
+                                    <p className="text-2xl font-bold dark:text-white">{stats.total}</p>
                                 </div>
                                 <div className="bg-red-100 p-2 rounded-full">
                                     <ShieldIcon className="w-5 h-5 text-red-600" />
@@ -188,8 +188,8 @@ export default function Heatmap() {
                             </div>
 
                             <div>
-                                <p className="text-sm text-gray-500">Most Common</p>
-                                <p className="text-lg font-semibold capitalize mt-1">
+                                <p className="text-sm text-gray-500 dark:text-gray-400">Most Common</p>
+                                <p className="text-lg font-semibold capitalize mt-1 dark:text-white">
                                     {(() => {
                                         const pairs = Object.entries(stats.byCategory);
                                         if (pairs.length === 0) return "N/A";
@@ -200,14 +200,14 @@ export default function Heatmap() {
                             </div>
 
                             <div>
-                                <p className="text-sm text-gray-500">Average Risk</p>
-                                <p className="text-xl font-bold">{stats.avgRisk.toFixed(1)}/10</p>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">Average Risk</p>
+                                <p className="text-xl font-bold dark:text-white">{stats.avgRisk.toFixed(1)}/10</p>
                             </div>
                         </div>
 
                         {/* Legend */}
-                        <div className="bg-white p-3 rounded-lg shadow border">
-                            <h4 className="text-xs font-semibold text-gray-600 mb-2">Legend</h4>
+                        <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow border dark:border-gray-700">
+                            <h4 className="text-xs font-semibold text-gray-600 dark:text-gray-300 mb-2">Legend</h4>
                             <div className="space-y-2">
                                 <LegendRow color="#FF0000" label="Murder" />
                                 <LegendRow color="#800080" label="GBV" />
@@ -227,7 +227,7 @@ export default function Heatmap() {
 // small presentational component for legend
 const LegendRow: React.FC<{ color: string; label: string }> = ({ color, label }) => (
     <div className="flex items-center gap-2">
-        <div style={{ background: color }} className="w-3 h-3 rounded-full border border-gray-200" />
-        <div className="text-sm text-gray-600">{label}</div>
+        <div style={{ background: color }} className="w-3 h-3 rounded-full border border-gray-200 dark:border-gray-600" />
+        <div className="text-sm text-gray-600 dark:text-gray-300">{label}</div>
     </div>
 );
