@@ -1,2 +1,15 @@
 # test folder
 crimenet_-community-safety-platform (8)/
+
+lib/
+lib64
+
+__pycache__
+
+bin
+
+venv
+
+include
+
+*.db
