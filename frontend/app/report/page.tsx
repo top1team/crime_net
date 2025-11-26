@@ -11,11 +11,38 @@ export default function ReportIncident() {
     anonymous: false
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement API call to submit incident
-    console.log('Incident reported:', formData);
-    alert('Incident reported successfully!');
+    setIsSubmitting(true);
+    
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/crimes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          title: formData.title,
+          category: formData.category,
+          location: formData.location,
+          description: formData.description || '',
+          anonymous: formData.anonymous.toString()
+        })
+      });
+      
+      if (response.ok) {
+        alert('Incident reported successfully!');
+        setFormData({ title: '', category: '', description: '', location: '', anonymous: false });
+      } else {
+        throw new Error('Failed to submit report');
+      }
+    } catch (error) {
+      alert('Error submitting report. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -116,9 +143,10 @@ export default function ReportIncident() {
 
               <button
                 type="submit"
-                className="w-full bg-red-600 text-white py-3 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors font-medium"
+                disabled={isSubmitting}
+                className="w-full bg-red-600 text-white py-3 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Submit Report
+                {isSubmitting ? 'Submitting...' : 'Submit Report'}
               </button>
             </form>
           </div>

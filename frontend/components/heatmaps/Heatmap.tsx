@@ -53,8 +53,8 @@ export default function Heatmap() {
                 if (activeCategory && activeCategory !== 'All') {
                     params.append('category', activeCategory);
                 }
-                // backend endpoint (adjust host/port if different)
-                const url = `http://localhost:8080/api/v1/heatmap${params.toString() ? `?${params.toString()}` : ''}`;
+                // backend endpoint
+                const url = `${process.env.NEXT_PUBLIC_API_URL}/api/crimes${params.toString() ? `?${params.toString()}` : ''}`;
                 const res = await fetch(url);
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data: Crime[] = await res.json();
