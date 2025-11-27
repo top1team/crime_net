@@ -5,6 +5,7 @@ import EmailIcon from './icons/EmailIcon';
 import LockIcon from './icons/LockIcon';
 import FacebookIcon from './icons/FacebookIcon';
 import TwitterIcon from './icons/TwitterIcon';
+import { useAuth } from '../contexts/AuthContext';
 
 interface AuthFormProps {
   initialState: 'login' | 'signup';
@@ -12,13 +13,77 @@ interface AuthFormProps {
 
 const AuthForm: React.FC<AuthFormProps> = ({ initialState }) => {
   const [isSignUp, setIsSignUp] = useState(initialState === 'signup');
+  const { login } = useAuth();
+
+  // Form State
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setIsSignUp(initialState === 'signup');
+    setError('');
   }, [initialState]);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    try {
+      const formData = new URLSearchParams();
+      formData.append('username', email);
+      formData.append('password', password);
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.detail || 'Login failed');
+      }
+
+      const data = await res.json();
+      login(data.access_token);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, full_name: name }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.detail || 'Signup failed');
+      }
+
+      // Auto login after signup
+      await handleLogin(e);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const GhostButton: React.FC<{ onClick: () => void; children: React.ReactNode, className?: string }> = ({ onClick, children, className }) => (
     <button
+      type="button"
       onClick={onClick}
       className={`bg-transparent border-2 border-white text-white font-bold py-2 px-10 rounded-full uppercase tracking-wider transition-transform transform hover:scale-105 focus:outline-none ${className}`}
     >
@@ -26,21 +91,26 @@ const AuthForm: React.FC<AuthFormProps> = ({ initialState }) => {
     </button>
   );
 
-  const Form: React.FC<{ title: string; buttonText: string; children: React.ReactNode }> = ({ title, buttonText, children }) => (
-    <div className="bg-white dark:bg-stone-800 flex flex-col items-center justify-center h-full px-12 text-center">
+  const Form: React.FC<{ title: string; buttonText: string; onSubmit: (e: React.FormEvent) => void; children: React.ReactNode }> = ({ title, buttonText, onSubmit, children }) => (
+    <form onSubmit={onSubmit} className="bg-white dark:bg-stone-800 flex flex-col items-center justify-center h-full px-12 text-center">
       <h1 className="text-3xl font-bold text-black dark:text-stone-200 mb-4">{title}</h1>
       <div className="flex my-4">
         <a href="#" className="social-link"><FacebookIcon className="h-6 w-6" /></a>
         <a href="#" className="social-link"><TwitterIcon className="h-6 w-6" /></a>
       </div>
+      {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
       {children}
-      <button className="bg-red-600 text-white font-bold py-3 px-12 rounded-full uppercase tracking-wider transition-transform transform hover:scale-105 focus:outline-none mt-4">
-        {buttonText}
+      <button
+        type="submit"
+        disabled={loading}
+        className="bg-red-600 text-white font-bold py-3 px-12 rounded-full uppercase tracking-wider transition-transform transform hover:scale-105 focus:outline-none mt-4 disabled:opacity-50"
+      >
+        {loading ? 'Processing...' : buttonText}
       </button>
-    </div>
+    </form>
   );
 
-  const InputField: React.FC<{ type: string; placeholder: string; icon: React.ReactNode }> = ({ type, placeholder, icon }) => (
+  const InputField: React.FC<{ type: string; placeholder: string; icon: React.ReactNode; value: string; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }> = ({ type, placeholder, icon, value, onChange }) => (
     <div className="relative w-full my-2">
       <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-stone-500">
         {icon}
@@ -48,31 +118,34 @@ const AuthForm: React.FC<AuthFormProps> = ({ initialState }) => {
       <input
         type={type}
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        required
         className="bg-gray-100 dark:bg-stone-700 border border-gray-200 dark:border-stone-600 w-full p-3 pl-12 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400 text-black dark:text-stone-200 placeholder-gray-500 dark:placeholder-stone-400"
       />
     </div>
   );
-  
+
   return (
     <div className={`relative bg-white dark:bg-stone-800 rounded-2xl shadow-2xl w-full max-w-4xl min-h-[600px] overflow-hidden`}>
       {/* Form Containers */}
       <div className={`form-container sign-up-container ${isSignUp ? 'translate-x-full opacity-100 z-5' : 'opacity-0 z-1'}`}>
-        <Form title="Create Account" buttonText="Sign Up">
+        <Form title="Create Account" buttonText="Sign Up" onSubmit={handleSignup}>
           <span className="text-sm text-gray-500 dark:text-stone-400 mb-4">or use your email for registration</span>
-          <InputField type="text" placeholder="Name" icon={<UserIcon className="h-5 w-5" />} />
-          <InputField type="email" placeholder="Email" icon={<EmailIcon className="h-5 w-5" />} />
-          <InputField type="password" placeholder="Password" icon={<LockIcon className="h-5 w-5" />} />
+          <InputField type="text" placeholder="Name" icon={<UserIcon className="h-5 w-5" />} value={name} onChange={(e) => setName(e.target.value)} />
+          <InputField type="email" placeholder="Email" icon={<EmailIcon className="h-5 w-5" />} value={email} onChange={(e) => setEmail(e.target.value)} />
+          <InputField type="password" placeholder="Password" icon={<LockIcon className="h-5 w-5" />} value={password} onChange={(e) => setPassword(e.target.value)} />
         </Form>
       </div>
       <div className={`form-container sign-in-container ${isSignUp ? '-translate-x-full opacity-0' : 'opacity-100 z-2'}`}>
-        <Form title="Sign In" buttonText="Sign In">
+        <Form title="Sign In" buttonText="Sign In" onSubmit={handleLogin}>
           <span className="text-sm text-gray-500 dark:text-stone-400 mb-4">or use your account</span>
-          <InputField type="email" placeholder="Email" icon={<EmailIcon className="h-5 w-5" />} />
-          <InputField type="password" placeholder="Password" icon={<LockIcon className="h-5 w-5" />} />
+          <InputField type="email" placeholder="Email" icon={<EmailIcon className="h-5 w-5" />} value={email} onChange={(e) => setEmail(e.target.value)} />
+          <InputField type="password" placeholder="Password" icon={<LockIcon className="h-5 w-5" />} value={password} onChange={(e) => setPassword(e.target.value)} />
           <a href="#" className="text-sm text-gray-500 dark:text-stone-400 my-4 hover:underline">Forgot your password?</a>
         </Form>
       </div>
-      
+
       {/* Overlay Container */}
       <div className={`overlay-container ${isSignUp ? '-translate-x-full' : 'translate-x-0'}`}>
         <div className={`overlay ${isSignUp ? 'translate-x-1/2' : 'translate-x-0'}`}>
@@ -98,7 +171,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ initialState }) => {
           </div>
         </div>
       </div>
-      
+
       <style>{`
         .form-container {
             position: absolute;
