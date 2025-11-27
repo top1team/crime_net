@@ -7,12 +7,18 @@ from typing import List, Optional
 import requests
 from datetime import datetime
 
+import os
+
 app = FastAPI(title="CrimeNet API")
 
 # CORS middleware
+origins = ["http://localhost:3000"]
+if os.getenv("FRONTEND_URL"):
+    origins.append(os.getenv("FRONTEND_URL"))
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

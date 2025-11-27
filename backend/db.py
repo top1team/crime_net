@@ -6,8 +6,12 @@ from dotenv import load_dotenv
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./crimenet.db")
 
+connect_args = {}
+if DATABASE_URL.startswith("sqlite"):
+    connect_args["check_same_thread"] = False
+
 # echo=True will print SQL executed; set to False in production if noisy
-engine = create_engine(DATABASE_URL, echo=False)
+engine = create_engine(DATABASE_URL, echo=False, connect_args=connect_args)
 
 def get_session() -> Generator[Session, None, None]:
     with Session(engine) as session:
